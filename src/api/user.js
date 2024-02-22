@@ -148,6 +148,49 @@ export function qybj1Api(data) {
     url: `/parking/area`,
     method: 'PUT',
     data
+  })
+}
+export function getparApi(params) {
+  return instance({
+    url: `/parking/payment/list`,
+    method: 'GET',
+    params
+
+  })
+}
+export function getbillingApi(params) {
+  return instance({
+    url: `/parking/rule/list`,
+    method: 'GET',
+    params
+
+  })
+}
+export function delbillingApi(id) {
+  return instance({
+    url: `/parking/rule/` + id,
+    method: 'DELETE',
+  })
+}
+export function addbillingApi(data) {
+  return instance({
+    url: `/parking/rule`,
+    method: 'POST',
+    data
+  })
+}
+export function xqbillingApi(id) {
+  return instance({
+    url: `/parking/rule/`+id,
+    method: 'GET',
+
+  })
+}
+export function updatebillingApi(data) {
+  return instance({
+    url: `/parking/rule`,
+    method: 'PUT',
+    data
 
   })
 }
