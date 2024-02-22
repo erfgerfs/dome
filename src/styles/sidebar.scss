@@ -75,15 +75,22 @@
         background-color: $menuHover !important;
       }
     }
+    .submenu-title-noDropdown.is-active{
+      background-color: #edf5ff !important;
+    }
+    & .el-submenu .el-menu-item.is-active {
 
-    .is-active>.el-submenu__title {
-      color: $subMenuActiveText !important;
+      background-color: #edf5ff !important;
+
+
+
     }
 
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
       background-color: $subMenuBg !important;
+
 
       &:hover {
         background-color: $subMenuHover !important;

@@ -1,32 +1,43 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
-    <breadcrumb class="breadcrumb-container" />
-
     <div class="right-menu">
+      <button style="margin-right: 20px;" class="bo">可视化大屏</button>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <b>{{ this.name }}</b>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
+
+
+          <el-dropdown-item @click.native="logout">
+            <span style="display:block;">退出登录</span>
+          </el-dropdown-item>
+          <el-dropdown-item divided>
+            <span style="display:block;" @click="dialogVisible = true">修改密码</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <el-dialog title="修改密码" :visible.sync="dialogVisible" width="30%">
+
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item label="旧密码">
+            <el-input v-model="form.oldpass"></el-input>
+          </el-form-item>
+
+
+          <el-form-item label="新密码">
+            <el-input v-model="form.newpass"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码">
+            <el-input v-model="form.newpass1"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
+            <el-button @click="qx">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -35,11 +46,23 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-
+import { getinfo, uplogin } from '@/api/user'
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+
+  },
+  data() {
+    return {
+      dialogVisible: false,
+      form: {
+        oldpass: '',
+        newpass: '',
+        newpass1: ''
+      },
+      name: ''
+    }
   },
   computed: {
     ...mapGetters([
@@ -52,20 +75,54 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      await this.$store.dispatch("user/logout");
+      this.$router.push('/login');
+    },
+    async onSubmit(form) {
+      if (this.form.newpass == this.form.newpass1) {
+        const res = await uplogin({ oldPassword: this.form.oldpass, newPassword: this.form.newpass })
+        console.log(res);
+        this.dialogVisible = false
+        this.$refs[form].resetFields();
+        await this.$store.dispatch("user/logout");
+        this.$router.push('/login')
+      }
+      this.dialogVisible = false
+      this.$refs[form].resetFields();
+      alert("两次密码不一致")
+    },
+    qx() {
+      this.dialogVisible = false
+    },
+    async aaa() {
+      const res = await getinfo()
+      console.log(res);
+      this.name = res.data.data.name
     }
+  },
+  created() {
+    this.aaa()
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.bo {
+  border-radius: 5px;
+  border: 1px solid #4971ff;
+  color: #4971ff;
+  background-color: #f4f6f8;
+  padding: 7px 13px;
+}
+
 .navbar {
-  height: 50px;
+
+  height: 70%;
   overflow: hidden;
   position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  background: #f4f6f8;
+
+  // box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
   .hamburger-container {
     line-height: 46px;
@@ -73,7 +130,7 @@ export default {
     float: left;
     cursor: pointer;
     transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
       background: rgba(0, 0, 0, .025)
