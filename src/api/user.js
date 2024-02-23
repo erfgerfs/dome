@@ -181,7 +181,7 @@ export function addbillingApi(data) {
 }
 export function xqbillingApi(id) {
   return instance({
-    url: `/parking/rule/`+id,
+    url: `/parking/rule/` + id,
     method: 'GET',
 
   })
@@ -194,6 +194,85 @@ export function updatebillingApi(data) {
 
   })
 }
+export function getmonthCardApi(params) {
+  return instance({
+    url: `/parking/card/list`,
+    method: 'GET',
+    params
+
+  })
+}
+export function getcostApi(params) {
+  return instance({
+    url: `/park/propertyfee`,
+    method: 'GET',
+    params
+
+  })
+}
+export function delcostApi(id) {
+  return instance({
+    url: `/park/propertyfee/` + id,
+    method: 'DELETE',
+
+
+  })
+}
+export function addcostApi(data) {
+  return instance({
+    url: `/park/propertyfee`,
+    method: 'POST',
+    data
+  })
+}
+export function AllenterprisecostApi() {
+  return instance({
+    url: `/park/all/enterprise`,
+    method: 'GET',
+  })
+}
+export function AllbuildingcostApi() {
+  return instance({
+    url: `/park/all/building`,
+    method: 'GET',
+  })
+}
+export function getinfoApi(params) {
+  return instance({
+    url: `/pole/info/list`,
+    method: 'GET',
+    params
+  })
+}
+export function delinfoApi(ids) {
+  return instance({
+    url: `/pole/info/` + ids,
+    method: 'DELETE',
+
+  })
+}
+export function addinfoApi(data) {
+  return instance({
+    url: `/pole/info`,
+    method: 'POST',
+    data
+  })
+}
+export function listinfoApi() {
+  return instance({
+    url: `/parking/area/dropList`,
+    method: 'GET',
+
+  })
+}
+export function bjinfoApi(data) {
+  return instance({
+    url: `/pole/info`,
+    method: 'PUT',
+    data
+  })
+}
+
 
 
 
