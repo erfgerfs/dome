@@ -35,14 +35,14 @@
 </template>
 
 <script>
-
+import {bgurlApi} from '@/api/user'
 export default {
   data() {
     return {
       form: {
         // name: '17274817283',//demo
         // pass: '123456' //zh@hm#23
-        name: 'gzk',
+        name: '17274817283',
         pass: '123456'
       },
       type1: false,
@@ -66,6 +66,10 @@ export default {
         })
         this.$router.push('/')
       })
+    },
+    async add() {
+      const res = await bgurlApi()
+      console.log(res);
     }
   },
   created() {
@@ -74,6 +78,7 @@ export default {
       const fff = JSON.parse(form1)
       this.form = fff
     }
+    this.add()
   }
 }
 </script>

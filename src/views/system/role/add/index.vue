@@ -160,6 +160,7 @@ export default {
       this.lll = []
       for (var i = 0; i < this.list1.length; i++) {
         this.lll.push(this.$refs.tree[i].getCheckedKeys())
+        console.log('this.$refs.tree[i].getCheckedKeys()', this.$refs.tree[i].getCheckedKeys());
       }
 
 

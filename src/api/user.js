@@ -471,6 +471,15 @@ export function getInfo() {
   })
 }
 
+//背景图片
+export function bgurlApi() {
+  return instance({
+    url: '/assets/login-bg-e4ea539c.svg',
+    method: 'GET',
+
+  })
+}
+
 // export function logout() {
 //   return instance({
 //     url: '/vue-admin-template/user/logout',

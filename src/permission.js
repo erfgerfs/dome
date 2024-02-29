@@ -89,7 +89,11 @@ router.beforeEach(async (to, from, next) => {
           const qbrouter = userRouter(onely, towly, Dtrouter)
           router.addRoutes([
             ...qbrouter,
-            { path: '*', redirect: '/404', hidden: true }
+            {
+              path: '/404',
+              component: () => import('@/views/404'),
+              hidden: true
+            },
           ])
           store.commit('user/setRouter', qbrouter)
 
