@@ -36,132 +36,18 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
-
   {
     path: '/',
     component: Layout,
     redirect: '/workbench',
     children: [{
       path: 'workbench',
-      name: 'workbench',
       component: () => import('@/views/workbench/index'),
       meta: { title: '工作台', icon: 'el-icon-data-board' }
     }]
   },
-
-  {
-    path: '/park',
-    component: Layout,
-    name: 'park',
-    meta: { title: '园区管理', icon: "el-icon-office-building" },
-    children: [
-      {
-        path: 'building',
-        name: 'building',
-        component: () => import('@/views/park/building/index'),
-        meta: { title: '楼宇管理' }
-      },
-      {
-        path: 'enterprise',
-        name: 'enterprise',
-        component: () => import('@/views/park/enterprise/index'),
-        meta: { title: '企业管理' },
-
-      },
-
-    ]
-  },
-  {
-    path: '/car',
-    component: Layout,
-    name: 'car',
-    meta: { title: '行车管理', icon: "el-icon-guide" },
-    children: [
-      {
-        path: 'area',
-        name: 'area',
-        component: () => import('@/views/car/area/index'),
-        meta: { title: '区域管理' }
-      },
-      {
-        path: 'monthCard',
-        name: 'monthCard',
-        component: () => import('@/views/car/monthCard/index'),
-        meta: { title: '月卡管理' }
-      },
-      {
-        path: 'pay',
-        name: 'pay',
-        component: () => import('@/views/car/pay/index'),
-        meta: { title: '停车缴费管理' }
-      },
-      {
-        path: 'billing',
-        name: 'billing',
-        component: () => import('@/views/car/billing/index'),
-        meta: { title: '计费规则管理' }
-      },
-    ]
-  },
-  {
-    path: '/propety',
-    component: Layout,
-    children: [{
-      path: 'cost',
-      name: 'cost',
-      component: () => import('@/views/cost/index'),
-      meta: { title: '物业费管理', icon: "form" }
-    }]
-  },
-  {
-    path: '/rod',
-    component: Layout,
-    name: 'rod',
-    meta: { title: '一体杆管理', icon: "el-icon-refrigerator" },
-    children: [
-      {
-        path: 'manage',
-        name: 'manage',
-        component: () => import('@/views/rod/manage/index'),
-        meta: { title: '一体杆管理' }
-      },
-      {
-        path: 'warnList',
-        name: 'warnList',
-        component: () => import('@/views/rod/warnList/index'),
-        meta: { title: '告警记录' }
-      }
-    ]
-  },
-  {
-    path: '/system',
-    component: Layout,
-    name: 'system',
-    meta: { title: '系统管理', icon: "el-icon-setting" },
-    children: [
-      {
-        path: 'employee',
-        name: 'employee',
-        component: () => import('@/views/system/employee/index'),
-        meta: { title: '员工管理' }
-      },
-      {
-        path: 'permission',
-        name: 'permission',
-        component: () => import('@/views/system/permission/index'),
-        meta: { title: '角色管理' }
-      },
-    ]
-  },
   {
     path: '/add',
-    name: 'add',
     component: () => import('@/views/park/enterprise/add/index'),
 
   },
@@ -171,21 +57,40 @@ export const constantRoutes = [
 
   },
   {
+    path: '/car/editMonthCard',
+    component: () => import('@/views/car/editMonthCard/index'),
+
+  },
+  {
+    path: '/car/renewMonthCard',
+    component: () => import('@/views/car/renewMonthCard/index'),
+
+  },
+  {
+    path: '/car/viewMonthCard',
+    component: () => import('@/views/car/viewMonthCard/index'),
+
+  },
+  {
     path: '/bj',
-    name: 'bj',
     component: () => import('@/views/park/enterprise/bj/index'),
 
   },
   {
     path: '/detail',
-    name: 'detail',
     component: () => import('@/views/park/enterprise/detail/index'),
-
   },
-
-
+  {
+    path: '/system/role/add',
+    component: () => import('@/views/system/role/add/index'),
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
+  },
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+
 ]
 
 const createRouter = () => new Router({

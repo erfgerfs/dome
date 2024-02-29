@@ -5,7 +5,7 @@
       <button style="margin-right: 20px;" class="bo">可视化大屏</button>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <b>{{ this.name }}</b>
+          <b>{{ name }}</b>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
 
@@ -61,13 +61,14 @@ export default {
         newpass: '',
         newpass1: ''
       },
-      name: ''
+
     }
   },
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'name'
     ])
   },
   methods: {
@@ -94,14 +95,14 @@ export default {
     qx() {
       this.dialogVisible = false
     },
-    async aaa() {
-      const res = await getinfo()
-      console.log(res);
-      this.name = res.data.data.name
-    }
+    // async aaa() {
+    //   const res = await getinfo()
+    //   console.log(res);
+    //   this.name = res.data.data.name
+    // }
   },
   created() {
-    this.aaa()
+
   }
 }
 </script>

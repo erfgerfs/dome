@@ -108,6 +108,7 @@ import { getcostApi, delcostApi, addcostApi, AllenterprisecostApi, Allbuildingco
 export default {
   name: "cost",
   data() {
+
     return {
       dialogVisible: false,
       dialogVisible1: false,
@@ -118,7 +119,6 @@ export default {
       lylist: [],
       formInline: {
         enterpriseName: '',
-
         start: '',
         end: ''
       },
@@ -137,9 +137,16 @@ export default {
         buildingId: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
         ],
-        startTime: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-        ],
+        // value2: [
+        //   { required: false, message: '请输入活动名称', trigger: 'blur' },
+        //   {
+        //     validator: (rule, value, callback) => {
+        //       if (this.ruleForm.startTime == '' || this.ruleForm.endTime == '') {
+        //         callback(new Error('请选择日期!!'))
+        //       }
+        //     },
+        //   }
+        // ],
         endTime: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
         ],
@@ -150,6 +157,7 @@ export default {
           { required: true, message: '请输入活动名称', trigger: 'blur' },
         ],
       },
+
       page: 1,
       pageSize: 10,
       value1: '',
@@ -161,6 +169,9 @@ export default {
     }
   },
   methods: {
+
+
+
     aaa() {
       this.ruleForm.startTime = this.value2[0]
       this.ruleForm.endTime = this.value2[1]
@@ -172,7 +183,7 @@ export default {
       date2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
       const diff = date2.getTime() - date1.getTime(); //目标时间减去当前时间
       const diffDate = diff / (24 * 60 * 60 * 1000);  //计算当前时间与结束时间之间相差天数
-      this.ruleForm.paymentAmount = diffDate * 41.67
+      this.ruleForm.paymentAmount = Math.round(diffDate * 41.67)
       console.log(this.ruleForm.paymentAmount);
     },
     getadd() {
@@ -213,11 +224,14 @@ export default {
           console.log('error submit!!');
           return false;
         }
-      });
+      })
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.dialogVisible2 = false
+      this.ruleForm.startTime = '',
+        this.ruleForm.endTime = '',
+        this.value2 = []
     },
     ck(data) {
       this.data = data

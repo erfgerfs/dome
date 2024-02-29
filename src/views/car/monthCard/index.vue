@@ -2,6 +2,9 @@
   <div>
     <el-form style="margin-bottom: 5px;border-bottom: 1px solid #ccc;" :inline="true" :model="formInline"
       class="demo-form-inline">
+
+
+
       <el-form-item label="车牌号码">
         <el-input size="small" v-model="formInline.carNumber" placeholder="请输入车牌号码"></el-input>
       </el-form-item>
@@ -22,14 +25,15 @@
     <div style="margin-top: 10px;display: flex;align-items: center;width: 100%;justify-content: space-between;">
       <div>
         <el-button type="primary" size="small" @click="$router.push('/car/addMonthCard')">添加月卡</el-button>
-        <el-button type="primary" size="small">批量删除</el-button>
+        <el-button type="primary" size="small" @click="pldel">批量删除</el-button>
       </div>
       <div class="aaa">
         <p style="bbb"> <i class="el-icon-success"></i>本园区共计 1530 个车位，月卡用户 0 人，车位占有率 0.00%</p>
       </div>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-
+    <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55">
+      </el-table-column>
       <el-table-column type="index" label="序号">
       </el-table-column>
       <el-table-column prop="personName" label="车主名称">
@@ -65,7 +69,7 @@
 </template>
 
 <script>
-import { getmonthCardApi } from '@/api/user';
+import { getmonthCardApi, delcardApi } from '@/api/user';
 export default {
   name: "monthCard",
   components: {
@@ -81,11 +85,26 @@ export default {
       page: 1,
       pageSize: 10,
       tableData: [],
-      total: null
+      total: null,
+      ids: []
     }
   },
   methods: {
-
+    async pldel() {
+      const res = await delcardApi(this.ids)
+      console.log(res);
+      this.$message({
+        type: 'success', // success error warning
+        message: '删除成功!!!',
+        duration: 2000,
+      })
+      this.add()
+    },
+    handleSelectionChange(val) {
+      console.log(val);
+      this.ids = val.map(item => item.id)
+      console.log(this.ids);
+    },
     onSubmit() {
       this.add()
     },
@@ -104,15 +123,25 @@ export default {
       this.add()
     },
     xf(id) {
-
+      this.$router.push({ path: '/car/renewMonthCard', query: { id: { id } } })
     },
     ck(id) {
-
+      this.$router.push({ path: '/car/viewMonthCard', query: { id: id } })
     },
     bj(id) {
 
+      this.$router.push({ path: '/car/editMonthCard', query: { id: { id } } })
     },
-    del(id) {
+    async del(id) {
+      console.log(id);
+      const res = await delcardApi(id)
+      console.log(res);
+      this.$message({
+        type: 'success', // success error warning
+        message: '删除成功!!!',
+        duration: 2000,
+      })
+      this.add()
 
     },
 

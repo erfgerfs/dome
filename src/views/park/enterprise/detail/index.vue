@@ -62,6 +62,9 @@
               </template>
             </el-table-column>
             <el-table-column prop="contractName" label="租赁合同" style="width: 30px;color: #6c8cfd;">
+              <template v-slot="{row}">
+                <el-button type="text" @click="aaa(row)">{{ row.contractName }}</el-button>
+              </template>
             </el-table-column>
             <el-table-column prop="startTime" label="录入时间" style="width: 50px;">
             </el-table-column>
@@ -130,6 +133,11 @@ export default {
 
   },
   methods: {
+    aaa(data){
+      const url=data.contractUrl
+      console.log(url);
+      window.open(url)
+    },
     async xz(data) {
       const res = await qyxzApi(data.id)
 

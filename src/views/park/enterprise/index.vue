@@ -6,107 +6,295 @@
     </div>
     <el-button type="primary" @click="go">添加企业</el-button>
     <div>
-      <template>
+      <el-table :data="list" style="width: 100%" @expand-change="nm">
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-table label-position="left" :data="props.row.children" inline class="demo-table-expand">
+              <el-table-column prop="buildingName" label="租聘楼宇">
+              </el-table-column>
+              <el-table-column label="租聘起止时间">
+                <template v-slot="{ row }">
+                  <div>{{ row.startTime }}---{{ row.endTime }}</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop=status label="合同状态">
+                <template v-slot="scope">
+
+                  <el-button size="mini" type="primary" v-show="scope.row.status == 0" plain>待生效</el-button>
+
+                  <el-button size="mini" type="success" v-show="scope.row.status == 1" plain>生效中</el-button>
+
+                  <el-button size="mini" v-show="scope.row.status == 2" plain>已到期</el-button>
+
+                  <el-button size="mini" v-show="scope.row.status == 3" type="info" plain>已退租</el-button>
+
+                </template>
+              </el-table-column>
+              <el-table-column prop=status label="操作">
+                <template v-slot="{ row }">
+
+                  <el-button type="text" v-show="row.renewFlag" @click="xz(row)">续租</el-button>
+                  <el-button type="text" disabled v-show="row.renewFlag == 0">续租</el-button>
+                  <el-button type="text" v-show="row.exitFlag" @click="tuizu(row.id)">退租</el-button>
+                  <el-button type="text" disabled v-show="row.exitFlag == 0">退租</el-button>
+                  <el-button type="text" v-if="row.exitFlag == 0" @click="del1(row.id)">删除</el-button>
+                  <el-button type="text" disabled v-else>删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+        </el-table-column>
+        <el-table-column type="index" label="序号" width="50">
+        </el-table-column>
+        <el-table-column prop="name" label="企业名称" width="200">
+        </el-table-column>
+        <el-table-column prop="contact" label="联系人">
+        </el-table-column>
+        <el-table-column prop="contactNumber" label="电话">
+        </el-table-column>
 
 
-        <el-table :data="list" style="width: 100%">
-          <el-table-column type="expand">
-            <template slot-scope="props">
-              <el-form label-position="left" @click.native="ppp(props.row.id)" class="demo-table-expand">
+        <el-table-column label="操作">
+          <template v-slot="scope">
+            <a style="margin:0 5px;color: #7094ff;" href="#" @click="addht(scope.row.id)">添加合同</a>
+            <a style="margin:0 5px;color: #7094ff;" href="#" @click="ck(scope.row.id)">查看</a>
+            <a style="margin:0 5px;color: #7094ff;" href="#" @click="bj(scope.row.id)">编辑</a>
+            <a style="margin:0 5px;color: #7094ff;" href="#" @click="del(scope.row.id)">删除</a>
 
-                <el-table :data="list1" style="width: 100%">
-                  <el-table-column prop="buildingName" label="租聘楼宇" width="180">
-                  </el-table-column>
-                  <el-table-column prop=startTime,endTime label="租聘起止时间" width="180">
-                  </el-table-column>
-                  <el-table-column prop=status label="合同状态" width="180">
-                    <template v-slot="scope">
-                      <button v-show="scope.row.status == 0" style="background-color: orange;">待生效</button>
-                      <button v-show="scope.row.status == 1" style="background-color: darkcyan;">生效中</button>
-                      <button v-show="scope.row.status == 2" style="background-color: chartreuse;">已到期</button>
-                      <button v-show="scope.row.status == 3" style="background-color: khaki;">已退租</button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop=status label="操作" width="180">
-                    <template v-slot="scope">
-                      <span>续租</span>
-                      <span>退租</span>
-                      <span>删除</span>
-                    </template>
-                  </el-table-column>
-
-                </el-table>
-
-              </el-form>
-            </template>
-          </el-table-column>
-          <el-table-column type="index" label="序号" width="50">
-          </el-table-column>
-          <el-table-column prop="name" label="企业名称" width="200">
-          </el-table-column>
-          <el-table-column prop="contact" label="联系人">
-          </el-table-column>
-          <el-table-column prop="contactNumber" label="电话">
-          </el-table-column>
-
-
-          <el-table-column label="操作">
-            <template v-slot="scope">
-              <a style="margin:0 5px;color: #7094ff;" href="#">添加合同</a>
-              <a style="margin:0 5px;color: #7094ff;" href="#" @click="ck(scope.row.id)">查看</a>
-              <a style="margin:0 5px;color: #7094ff;" href="#" @click="bj(scope.row.id)">编辑</a>
-              <a style="margin:0 5px;color: #7094ff;" href="#" @click="del(scope.row.id)">删除</a>
-
-            </template>
-          </el-table-column>
-        </el-table>
-      </template>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page"
       :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="100">
     </el-pagination>
 
 
+
+    <el-dialog :title='text' :visible.sync="dialogVisible" width="30%">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="租凭楼宇" prop="buildingId">
+          <el-select v-if="this.bbbbb == null" v-model="ruleForm.buildingId" placeholder="请选择活动区域">
+            <el-option v-for="(item, index) in list2" :key="index" :label="item.name" :value="item.id"></el-option>
+            <!-- <el-option v-else   :label="item.name" :value="item.id"></el-option> -->
+          </el-select>
+          <el-input v-else disabled v-model="okok"></el-input>
+        </el-form-item>
+        <el-form-item label="租聘起始日期">
+
+          <el-date-picker v-model="value1" type="daterange" range-separator="至" start-placeholder="开始月份"
+            end-placeholder="结束月份" @change="aaa" value-format="yyyy-MM-dd">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="租聘合同">
+          <el-upload class="upload-demo" :on-preview="kkk" action="#" :file-list="fileList" :http-request="upload"
+            :before-remove="beforeRemove">
+            <el-button :disabled="buttonstart" size="small" :type="buttonstart ? 'success' : 'primary'">{{
+              buttonstart ? '已上传' : '点击上传' }}</el-button>
+            <!-- <el-button size="small" type="success" disabled>已上传</el-button> -->
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5MB</div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-import { qyApi, qydelApi, qyaddApi, qyzyApi } from '@/api/user'
+import { qyApi, qydelApi, qyaddApi, qyzyApi, listbuildingApi, qyejzApi, addbuildingApi, tuienterpriseApi, delenterpriseApi } from '@/api/user'
 export default {
   name: "billing",
   data() {
     return {
+      okok: '',
+      bbbbb: null,
+      text: '',
+      ppp: null,
+      fileList: [],
       list1: [],
+      nnn: {},
       page: 1,
       pageSize: 10,
       list: [],
       input: '',
       total1: '',
       name: '',
-      rules: {
-        name: [
-          { required: true, message: '请输入楼宇名称', trigger: 'blur' },
-          { min: 1, max: 5, message: '长度在 1 到 5 个字符', trigger: 'blur' }
-        ],
-        contact: [
-          { required: true, message: '请输入层数名称', trigger: 'blur' },
-          { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
-        ],
-        contactNumber: [
-          { required: true, message: '请输入在管面积', trigger: 'blur' },
-          { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
-        ],
+      id100: null,
+      list2: [],
+      value1: [],
+      dialogVisible: false,
+      ruleForm: {
+        buildingId: null,
+        startTime: '',
+        endTime: '',
+        contractUrl: '',
+        contractId: '',
+        type: 0,
+        enterpriseId: null,
 
+      },
+      rules: {
+        buildingId: [
+          { required: true, message: '请输入楼宇名称', trigger: 'blur' },
+
+        ],
       }
     }
 
   },
+  computed: {
+    buttonstart() {
+      return !!this.ruleForm.contractId || false
+    }
+  },
   methods: {
-    async ppp(id) {
-      const res = await qyzyApi(id)
+    async nm(row) {
+      console.log(row);
+      const res = await qyzyApi(row.id)
       console.log(res);
+      this.id100 = row.id
       // console.log(id);
-      this.list1 = res.data.data
+      row.children = res.data.data
+      // this.list1 = res.data.data
+    },
+    async del1(id) {
+      const res = await delenterpriseApi(id)
+      console.log(res);
+      this.$message({
+        type: 'success',
+        message: '删除成功'
+      })
+    },
+    async xz(data) {
+      console.log(data);
+      this.ruleForm.buildingId = data.buildingId
+      this.okok = `办公楼${this.ruleForm.buildingId}栋`
+      this.ruleForm.type = 1
+      this.bbbbb = data.id
+      this.value1 = [data.startTime, data.endTime]
+      this.ruleForm.startTime = data.startTime
+      this.ruleForm.endTime = data.endTime
+      this.dialogVisible = true
+      this.text = '续租合同'
+
+    },
+    async tuizu(id) {
+      if (confirm('确定退租吗')) {
+        const res = await tuienterpriseApi(id)
+        console.log((res));
+        this.$message({
+          type: 'success', // success error warning
+          message: '退租成功',
+          duration: 2000,
+        })
+      }
+
+    },
+    kkk() {
+      window.open(this.ruleForm.contractUrl)
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    async upload(data) {
+
+      const file = data.file
+      console.log(file.size);
+      if (file.size < 5 * 1024 * 1024) {
+        const forMData = new FormData()
+        forMData.append('file', file)
+        forMData.append('type', 'contract')
+
+        console.log('data', forMData);
+
+        const res = await qyejzApi(forMData)
+        this.ruleForm.contractUrl = res.data.data.url
+        this.ruleForm.contractId = res.data.data.id
+        if (forMData) {
+          this.ppp = 1
+        }
+        this.ppp = 0
+        console.log(res);
+      } else {
+        alert('不能大于5MB')
+      }
+
+    },
+    aaa() {
+      this.ruleForm.startTime = this.value1[0]
+      this.ruleForm.endTime = this.value1[1]
+      console.log(this.ruleForm.startTime);
+      console.log(this.ruleForm.endTime);
+    },
+    async addht(id) {
+      this.ruleForm.enterpriseId = id
+      this.dialogVisible = true
+      this.text = '添加合同'
+      const res = await listbuildingApi()
+      this.list2 = res.data.data
+      console.log("list2", this.list2);
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          if (this.bbbbb) {
+            const data = {
+              buildingId: this.ruleForm.buildingId,
+              endTime: this.ruleForm.endTime,
+              startTime: this.ruleForm.startTime,
+              enterpriseId: this.id100,
+              type: this.ruleForm.type,
+              contractId: this.ruleForm.contractId,
+              contractUrl: this.ruleForm.contractUrl
+            }
+            const res = await addbuildingApi(data)
+            console.log(res);
+            this.$message({
+              type: 'success', // success error warning
+              message: '续租成功',
+              duration: 2000,
+            })
+            this.ppp1(this.ruleForm.enterpriseId)
+            this.type = 0
+            this.bbbbb = null
+            this.value1 = []
+            this.ruleForm.buildingId = null
+            
+
+          } else {
+            const res = await addbuildingApi(this.ruleForm)
+            console.log(res);
+            this.$message({
+              type: 'success', // success error warning
+              message: '添加成功',
+              duration: 2000,
+            })
+          }
+          this.dialogVisible = false
+          this.add()
+
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.value1 = []
+      this.ruleForm.buildingId = null
+      this.$refs[formName].resetFields();
+      this.dialogVisible = false
+    },
+    async ppp1(id) {
+
     },
     ck(id) {
       this.$router.push({ path: '/detail', query: { id: id } })
@@ -120,7 +308,13 @@ export default {
     async add() {
       const res = await qyApi({ page: this.page, pageSize: this.pageSize, name: this.name })
       console.log(res);
-      this.list = res.data.data.rows
+      this.list = res.data.data.rows.map((item) => {
+        return {
+          ...item,
+          children: []
+        }
+      })
+
       this.total1 = res.data.data.total
 
     },

@@ -82,6 +82,9 @@ export function qyejzApi(data) {
   return instance({
     url: `/upload`,
     method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
     data
   })
 }
@@ -272,18 +275,201 @@ export function bjinfoApi(data) {
     data
   })
 }
+//获取企业楼宇  /park/rent/building
+export function listbuildingApi() {
+  return instance({
+    url: `/park/rent/building`,
+    method: 'GET',
+  })
+}
+//企业添加合同 /park/enterprise/rent
+export function addbuildingApi(data) {
+  return instance({
+
+    url: `/park/enterprise/rent`,
+    method: 'POST',
+    data
+  })
+}
+
+//月卡管理 删除   /parking/card/{ids}
+export function delcardApi(ids) {
+  return instance({
+    url: `/parking/card/` + ids,
+    method: 'DELETE',
+  })
+}
+//月卡管理 添加   /parking/card/{ids}
+export function addcardApi(data) {
+  return instance({
+    url: `/parking/card`,
+    method: 'POST',
+    data
+  })
+}
+//月卡管理 详情   /parking/card/{ids}
+export function xqcardApi(id) {
+  return instance({
+    url: `/parking/card/detail/` + id,
+    method: 'GET',
+  })
+}
+//月卡管理 编辑   /parking/card/{ids}
+export function updatecardApi(data) {
+  return instance({
+    url: `/parking/card/edit`,
+    method: 'PUT',
+    data
+  })
+}
+//系统管理员工 列表   /park/sys/user
+export function listemployeeApi(params) {
+  return instance({
+    url: `/park/sys/user`,
+    method: 'GET',
+    params
+  })
+}
+//系统管理员工 列表   /park/sys/role
+export function getemployeeApi() {
+  return instance({
+    url: `/park/sys/role`,
+    method: 'GET',
+  })
+}
+//系统管理员工 添加   /park/sys/user
+export function addemployeeApi(data) {
+  return instance({
+    url: `/park/sys/user`,
+    method: 'POST',
+    data
+  })
+}
+//系统管理员工 添加   /park/sys/user/12270
+export function delemployeeApi(id) {
+  return instance({
+    url: `/park/sys/user/` + id,
+    method: 'DELETE',
+
+  })
+}
+//系统管理员工 编辑   /park/sys/user/12270
+export function updateemployeeApi(data) {
+  return instance({
+    url: `/park/sys/user`,
+    method: 'PUT',
+    data
+  })
+}
+//系统管理员工 重置密码   /park/sys/user/resetPwd
+export function passemployeeApi(data) {
+  return instance({
+    url: `/park/sys/user/resetPwd`,
+    method: 'PUT',
+    data
+  })
+}
+//企业 退租   /park/enterprise/rent/{id}
+export function tuienterpriseApi(id) {
+  return instance({
+    url: `/park/enterprise/rent/` + id,
+    method: 'PUT',
+
+  })
+}
+//企业 删除合同   /park/enterprise/rent/{id}
+export function delenterpriseApi(id) {
+  return instance({
+    url: `/park/enterprise/rent/` + id,
+    method: 'DELETE',
+
+  })
+}
+//月卡 续费   /parking/card/recharge
+export function xfrechargeApi(data) {
+  return instance({
+    url: `/parking/card/recharge`,
+    method: 'POST',
+    data
+  })
+}
+//月卡 查看   /parking/card/{Id}
+export function ckrechargeApi(id) {
+  return instance({
+    url: `/parking/card/` + id,
+    method: 'GET',
+
+  })
+}
+//角色 列表   /park/sys/role
+export function listroleApi() {
+  return instance({
+    url: `/park/sys/role`,
+    method: 'GET',
+
+  })
+}
+//角色 功能权限   park/sys/role/
+export function gnroleApi(id) {
+  return instance({
+    url: `/park/sys/role/` + id,
+    method: 'GET',
+
+  })
+}
+//角色 获取树状   /park/sys/permision/all/tree
+export function getroleApi() {
+  return instance({
+    url: `/park/sys/permision/all/tree`,
+    method: 'GET',
+
+  })
+}
+//角色 成员   /park/sys/permision/all/tree
+export function cyroleApi(id, params) {
+  return instance({
+    url: `/park/sys/roleUser/` + id,
+    method: 'GET',
+    params
+  })
+}
+//角色 添加   /api/park/sys/role
+export function addroleApi(data) {
+  return instance({
+    url: `/park/sys/role`,
+    method: 'POST',
+    data
+  })
+}
+//角色 删除   /api/park/sys/role
+export function delroleApi(id) {
+  return instance({
+    url: `/park/sys/role/` + id,
+    method: 'DELETE',
+
+  })
+}
+//角色 编辑   /park/sys/role
+export function updateroleApi(data) {
+  return instance({
+    url: `/park/sys/role/`,
+    method: 'PUT',
+    data
+
+  })
+}
 
 
 
 
 
-// export function getInfo(token) {
-//   return instance({
-//     url: '/vue-admin-template/user/info',
-//     method: 'get',
-//     params: { token }
-//   })
-// }
+export function getInfo() {
+  return instance({
+    url: '/park/user/profile',
+    method: 'GET',
+
+  })
+}
 
 // export function logout() {
 //   return instance({

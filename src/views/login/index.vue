@@ -40,8 +40,10 @@ export default {
   data() {
     return {
       form: {
-        name: 'demo',//demo
-        pass: 'zh@hm#23' //zh@hm#23
+        // name: '17274817283',//demo
+        // pass: '123456' //zh@hm#23
+        name: 'gzk',
+        pass: '123456'
       },
       type1: false,
       // aaa:localStorage.getItem('form_item')

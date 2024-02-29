@@ -122,7 +122,7 @@ export default {
   methods: {
     fh() {
       this.$router.push('/park/enterprise')
-      
+
     },
     async add(params) {
       console.log(params);
@@ -163,6 +163,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
+          
           const res = await qyaddApi(this.ruleForm)
           this.$message({
             message: '恭喜添加成功！！！',

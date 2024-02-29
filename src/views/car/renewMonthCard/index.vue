@@ -1,20 +1,20 @@
 <template>
   <div style="width: 100%;height: 100%;background-color: #f4f6f8;justify-content: center;">
-    <Header :content="'添加月卡'"></Header>
+    <Header :content="'月卡缴费'"></Header>
     <div style="background-color: #fff;width: 80%;margin: 20px auto;">
       <div>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="车主姓名" prop="personName">
-            <el-input v-model="ruleForm.personName"></el-input>
+            <el-input disabled v-model="ruleForm.personName"></el-input>
           </el-form-item>
           <el-form-item label="联系方式" prop="phoneNumber">
-            <el-input v-model="ruleForm.phoneNumber"></el-input>
+            <el-input disabled v-model="ruleForm.phoneNumber"></el-input>
           </el-form-item>
           <el-form-item label="车牌号码" prop="carNumber">
-            <el-input v-model="ruleForm.carNumber"></el-input>
+            <el-input disabled v-model="ruleForm.carNumber"></el-input>
           </el-form-item>
           <el-form-item label="车辆品牌" prop="carBrand">
-            <el-input v-model="ruleForm.carBrand"></el-input>
+            <el-input disabled v-model="ruleForm.carBrand"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -43,20 +43,22 @@
 
       <el-button type="primary" @click="submitForm()">立即创建</el-button>
       <el-button @click="resetForm()">重置</el-button>
+
     </div>
   </div>
 </template>
 
 <script>
 import Header from '@/components/user/header.vue';
-import { addcardApi } from '@/api/user'
+import { addcardApi, xqcardApi, xfrechargeApi } from '@/api/user'
 export default {
   components: {
     Header
   },
   data() {
     return {
-      value1: '',
+      id1: this.$route.query.id,
+      value1: [],
       ruleForm: {
         personName: '',
         phoneNumber: '',
@@ -67,7 +69,8 @@ export default {
         cardStartDate: '',
         cardEndDate: '',
         paymentAmount: '',
-        paymentMethod: ''
+        paymentMethod: '',
+        rechargeId: null
       },
       rules1: {
         cardStartDate: [
@@ -101,6 +104,7 @@ export default {
     }
   },
   methods: {
+
     submitForm() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
@@ -109,19 +113,19 @@ export default {
             if (valid) {
               // alert('submit!');
               const data = {
-                ...than.ruleForm,
+                carInfoId: this.id1.id,
                 cardStartDate: than.ruleForm1.cardStartDate,
                 cardEndDate: than.ruleForm1.cardEndDate,
                 paymentAmount: than.ruleForm1.paymentAmount,
                 paymentMethod: than.ruleForm1.paymentMethod,
 
               }
-              const res = await addcardApi(data)
+              const res = await xfrechargeApi(data)
 
               console.log(res);
               this.$message({
                 type: 'success', // success error warning
-                message: '添加成功',
+                message: '缴费成功',
                 duration: 2000,
               })
               than.$router.go(-1)
@@ -140,7 +144,26 @@ export default {
       // console.log(this.value1);
       this.ruleForm1.cardStartDate = this.value1[0]
       this.ruleForm1.cardEndDate = this.value1[1]
+    },
+    async add() {
+
+      const res = await xqcardApi(this.id1.id)
+      console.log(res);
+      this.ruleForm = {
+        personName: res.data.data.personName,
+        phoneNumber: res.data.data.phoneNumber,
+        carNumber: res.data.data.carNumber,
+        carBrand: res.data.data.carBrand,
+        carInfoId: res.data.data.carInfoId,
+      };
+      // this.value1 = [res.data.data.cardStartDate, 0]
+      // this.ruleForm1.cardStartDate = res.data.data.cardStartDate
+      // this.value1[0] = this.ruleForm1.cardStartDate
+
     }
+  },
+  created() {
+    this.add()
   }
 }
 
