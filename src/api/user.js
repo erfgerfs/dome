@@ -479,6 +479,22 @@ export function bgurlApi() {
 
   })
 }
+//告警记录  /pole/warning/list
+export function gjApi(params) {
+  return instance({
+    url: '/pole/warning/list',
+    method: 'GET',
+    params
+  })
+}
+//告警记录删除  /pole/warning/list
+export function delgjApi(id) {
+  return instance({
+    url: '/pole/warning/' + id,
+    method: 'DELETE',
+    id
+  })
+}
 
 // export function logout() {
 //   return instance({

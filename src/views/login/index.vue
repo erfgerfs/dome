@@ -43,8 +43,8 @@ export default {
       form: {
         // name: '17274817283',//demo
         // pass: '123456' //zh@hm#23
-        name: '17274817283',
-        pass: '123456'
+        name: 'admin',
+        pass: 'admin123'
       },
       type1: false,
       // aaa:localStorage.getItem('form_item')
