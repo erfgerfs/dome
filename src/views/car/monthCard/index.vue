@@ -24,8 +24,8 @@
     </el-form>
     <div style="margin-top: 10px;display: flex;align-items: center;width: 100%;justify-content: space-between;">
       <div>
-        <el-button type="primary" size="small" @click="$router.push('/car/addMonthCard')">添加月卡</el-button>
-        <el-button type="primary" size="small" @click="pldel">批量删除</el-button>
+        <el-button type="primary" size="small" @click="$router.push('/car/addMonthCard')" v-n="'parking:card:add_edit'">添加月卡</el-button>
+        <el-button type="primary" size="small" @click="pldel" v-n="'parking:card:remove'">批量删除</el-button>
       </div>
       <div class="aaa">
         <p style="bbb"> <i class="el-icon-success"></i>本园区共计 1530 个车位，月卡用户 0 人，车位占有率 0.00%</p>
@@ -54,10 +54,10 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template v-slot="{ row }">
-          <el-button type="text" size="small" @click="xf(row.id)">续费</el-button>
-          <el-button type="text" size="small" @click="ck(row.id)">查看</el-button>
-          <el-button type="text" size="small" @click="bj(row.id)">编辑</el-button>
-          <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
+          <el-button type="text" size="small" @click="xf(row.id)" v-n="'parking:card:recharge'">续费</el-button>
+          <el-button type="text" size="small" @click="ck(row.id)" v-n="'parking:card:query'">查看</el-button>
+          <el-button type="text" size="small" @click="bj(row.id)" v-n="'parking:card:add_edit'">编辑</el-button>
+          <el-button type="text" size="small" @click="del(row.id)" v-n="'parking:card:remove'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

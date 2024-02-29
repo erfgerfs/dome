@@ -4,7 +4,7 @@
       企业名称：<el-input v-model="input" placeholder="请输入企业名称" style="width: 250px;"></el-input>
       <el-button type="primary" @click="onSubmit">查询</el-button>
     </div>
-    <el-button type="primary" @click="go">添加企业</el-button>
+    <el-button type="primary" @click="go" v-n="'park:enterprise:add_edit'">添加企业</el-button>
     <div>
       <el-table :data="list" style="width: 100%" @expand-change="nm">
         <el-table-column type="expand">
@@ -33,12 +33,12 @@
               <el-table-column prop=status label="操作">
                 <template v-slot="{ row }">
 
-                  <el-button type="text" v-show="row.renewFlag" @click="xz(row)">续租</el-button>
-                  <el-button type="text" disabled v-show="row.renewFlag == 0">续租</el-button>
-                  <el-button type="text" v-show="row.exitFlag" @click="tuizu(row.id)">退租</el-button>
-                  <el-button type="text" disabled v-show="row.exitFlag == 0">退租</el-button>
-                  <el-button type="text" v-if="row.exitFlag == 0" @click="del1(row.id)">删除</el-button>
-                  <el-button type="text" disabled v-else>删除</el-button>
+                  <el-button type="text" v-show="row.renewFlag" @click="xz(row)" v-n="'park:rent:add_surrender'">续租</el-button>
+                  <el-button type="text" disabled v-show="row.renewFlag == 0" v-n="'park:rent:add_surrender'">续租</el-button>
+                  <el-button type="text" v-show="row.exitFlag" @click="tuizu(row.id)" v-n="'park:rent:add_surrender'">退租</el-button>
+                  <el-button type="text" disabled v-show="row.exitFlag == 0" v-n="'park:rent:add_surrender'">退租</el-button>
+                  <el-button type="text" v-if="row.exitFlag == 0" @click="del1(row.id)" v-n="'park:rent:remove'">删除</el-button>
+                  <el-button type="text" disabled v-else v-n="'park:rent:remove'">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -56,10 +56,10 @@
 
         <el-table-column label="操作">
           <template v-slot="scope">
-            <a style="margin:0 5px;color: #7094ff;" href="#" @click="addht(scope.row.id)">添加合同</a>
-            <a style="margin:0 5px;color: #7094ff;" href="#" @click="ck(scope.row.id)">查看</a>
-            <a style="margin:0 5px;color: #7094ff;" href="#" @click="bj(scope.row.id)">编辑</a>
-            <a style="margin:0 5px;color: #7094ff;" href="#" @click="del(scope.row.id)">删除</a>
+            <a style="margin:0 5px;color: #7094ff;" href="#" @click="addht(scope.row.id)" v-n="'park:rent:add_surrender'">添加合同</a>
+            <a style="margin:0 5px;color: #7094ff;" href="#" @click="ck(scope.row.id)" v-n="'park:enterprise:query'">查看</a>
+            <a style="margin:0 5px;color: #7094ff;" href="#" @click="bj(scope.row.id)" v-n="'park:enterprise:add_edit'">编辑</a>
+            <a style="margin:0 5px;color: #7094ff;" href="#" @click="del(scope.row.id)" v-n="'park:enterprise:remove'">删除</a>
 
           </template>
         </el-table-column>
@@ -267,7 +267,7 @@ export default {
             this.bbbbb = null
             this.value1 = []
             this.ruleForm.buildingId = null
-            
+
 
           } else {
             const res = await addbuildingApi(this.ruleForm)

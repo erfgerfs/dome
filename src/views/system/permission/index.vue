@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button @click="$router.push('/system/role/add')">添加角色</el-button>
+    <el-button @click="$router.push('/system/role/add')" v-n="'sys:role:add_edit'">添加角色</el-button>
     <div class="box">
       <el-tabs :tab-position="'left'" style="height: 100vh;" type="card">
         <el-tab-pane v-for="(item, index) in list" :key="index">
@@ -9,8 +9,8 @@
               <a href="#"> {{ item.roleName }}</a></el-tooltip>
             <el-popover placement="top" width="100px" :v-model="visible" trigger="click">
               <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="bj">编辑角色</el-button>
-                <el-button type="danger" size="mini" @click="open">删除</el-button>
+                <el-button size="mini" type="text" @click="bj" v-n="'sys:role:add_edit'">编辑角色</el-button>
+                <el-button type="danger" size="mini" @click="open" v-n="'sys:role:remove'">删除</el-button>
               </div>
               <i @click="aaa(item.roleId)" :slot="reference1" class="el-icon-more"></i>
             </el-popover>

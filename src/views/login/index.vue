@@ -1,7 +1,8 @@
 <template>
   <div class="box">
     <div class="box1">
-      <img src="../../assets/bj.jpg" style="width: 100%;height: 100%;border-radius: 0 60px 0 0;" alt="">
+      <img src="../../assets/Snipaste_2024-02-29_13-20-07.png"
+        style="width: 100%;height: 100%;border-radius: 0 60px 60px 0;" alt="">
     </div>
     <div class="box2">
       <div class="box3">
@@ -35,7 +36,7 @@
 </template>
 
 <script>
-import {bgurlApi} from '@/api/user'
+import { bgurlApi } from '@/api/user'
 export default {
   data() {
     return {
@@ -67,10 +68,7 @@ export default {
         this.$router.push('/')
       })
     },
-    async add() {
-      const res = await bgurlApi()
-      console.log(res);
-    }
+
   },
   created() {
     const form1 = localStorage.getItem('form_item')
@@ -78,7 +76,7 @@ export default {
       const fff = JSON.parse(form1)
       this.form = fff
     }
-    this.add()
+
   }
 }
 </script>

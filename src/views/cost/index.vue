@@ -17,7 +17,7 @@
         <el-button size="small" type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-button type="primary" size="small" @click="getadd()">添加账单</el-button>
+    <el-button type="primary" size="small" @click="getadd()" v-n="'park:propertyFee:add'">添加账单</el-button>
 
     <el-table :data="tableData" style="width: 100%">
       <el-table-column type="index" label="序号">
@@ -37,8 +37,8 @@
       <el-table-column label="操作">
         <template v-slot="{ row }">
 
-          <el-link type="primary" @click="ck(row)">查看</el-link>
-          <el-link type="primary" @click="del(row.id)">删除</el-link>
+          <el-link type="primary" @click="ck(row)" v-n="'park:propertyFee:query'">查看</el-link>
+          <el-link type="primary" @click="del(row.id)" v-n="'park:propertyFee:remove'">删除</el-link>
         </template>
       </el-table-column>
     </el-table>

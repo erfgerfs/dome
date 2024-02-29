@@ -10,7 +10,7 @@
           <el-button type="primary" @click="onSubmit">查询</el-button>
         </el-form-item>
       </el-form>
-      <el-button style="margin: 20px 0;" type="primary" @click="add1">添加员工</el-button>
+      <el-button style="margin: 20px 0;" type="primary" @click="add1" v-n="'sys:user:add_edit'">添加员工</el-button>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="index" label="序号">
         </el-table-column>
@@ -32,9 +32,9 @@
         </el-table-column>
         <el-table-column prop="status" label="状态">
           <template v-slot="{ row }">
-            <el-button type="text" @click="bj(row)">编辑</el-button>
-            <el-button type="text" @click="open(row.id)">删除</el-button>
-            <el-button type="text" @click="pass(row.id)">重置密码</el-button>
+            <el-button type="text" @click="bj(row)" v-n="'sys:user:add_edit'">编辑</el-button>
+            <el-button type="text" @click="open(row.id)" v-n="'sys:user:remove'">删除</el-button>
+            <el-button type="text" @click="pass(row.id)" v-n="'sys:user:resetPwd'">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>

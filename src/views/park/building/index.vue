@@ -4,7 +4,7 @@
       楼宇名称：<el-input v-model="input" placeholder="请输入楼宇名称" style="width: 250px;"></el-input>
       <el-button type="primary" @click="onSubmit">查询</el-button>
     </div>
-    <el-button type="success" @click="dialogVisible = true">添加楼宇</el-button>
+    <el-button type="success" @click="dialogVisible = true" v-n="'park:building:add_edit'">添加楼宇</el-button>
     <div>
       <template>
         <el-table :data="list" style="width: 100%">
@@ -26,8 +26,8 @@
           </el-table-column>
           <el-table-column label="操作">
             <template v-slot="scope">
-              <a style="margin:0 5px;color: #7094ff;" href="#" @click="bj(scope.row.id)">编辑</a>
-              <a style="margin:0 5px;color: #7094ff;" href="#" @click="del(scope.row.id)">删除</a>
+              <a style="margin:0 5px;color: #7094ff;" href="#" @click="bj(scope.row.id)" v-n="'park:building:add_edit'">编辑</a>
+              <a style="margin:0 5px;color: #7094ff;" href="#" @click="del(scope.row.id)" v-n="'park:building:remove'">删除</a>
 
             </template>
           </el-table-column>

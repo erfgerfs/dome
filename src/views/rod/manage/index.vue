@@ -23,8 +23,8 @@
     </el-form>
     <div style="margin-top: 10px;display: flex;align-items: center;width: 100%;justify-content: space-between;">
       <div>
-        <el-button type="primary" size="small" @click="bbb()">添加一体杆</el-button>
-        <el-button size="small" @click="pldel">批量删除</el-button>
+        <el-button type="primary" size="small" @click="bbb()" v-n="'pole:info:add_edit'">添加一体杆</el-button>
+        <el-button size="small" @click="pldel" v-n="'pole:info:remove'">批量删除</el-button>
       </div>
 
     </div>
@@ -57,8 +57,8 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template v-slot="{ row }">
-          <el-button type="text" size="small" @click="bj(row)">编辑</el-button>
-          <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
+          <el-button type="text" size="small" @click="bj(row)" v-n="'pole:info:add_edit'">编辑</el-button>
+          <el-button type="text" size="small" @click="del(row.id)" v-n="'pole:info:remove'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

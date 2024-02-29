@@ -29,8 +29,8 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作">
           <template v-slot="{ row }">
-            <el-button type="text" size="small" @click="bj(row.id)">编辑</el-button>
-            <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
+            <el-button type="text" size="small" @click="bj(row.id)" v-n="'parking:rule:add_edit'">编辑</el-button>
+            <el-button type="text" size="small" @click="del(row.id)" v-n="'parking:rule:remove'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -102,7 +102,7 @@
           </div>
         </div>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" v-n="'parking:rule:add_edit'">立即创建</el-button>
           <el-button @click="resetForm('ruleForm')">取消</el-button>
         </el-form-item>
       </el-form>

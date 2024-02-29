@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" size="small" @click="bbb">添加区域</el-button>
+    <el-button type="primary" size="small" @click="bbb" v-n="'parking:area:add_edit'">添加区域</el-button>
     <el-table show-header :data="tableData" style="width: 100%">
       <el-table-column prop="ruleId" label="序号">
       </el-table-column>
@@ -23,9 +23,9 @@
       </el-table-column>
       <el-table-column label="操作">
         <template v-slot="scope">
-          <a href="#" style="margin: 0 .1rem ;color: #4789ff;" @click="bj(scope.row)">编辑</a>
+          <a href="#" style="margin: 0 .1rem ;color: #4789ff;" @click="bj(scope.row)" v-n="'parking:area:add_edit'">编辑</a>
           <el-popconfirm title="这是一段内容确定删除吗" @onConfirm="del(scope.row.id)"><a href="#" slot="reference"
-              style="margin: 0 .1rem ;color: #4789ff;">删除</a>
+              style="margin: 0 .1rem ;color: #4789ff;" v-n="'parking:area:remove'">删除</a>
           </el-popconfirm>
         </template>
       </el-table-column>
