@@ -14,7 +14,7 @@ const mutations = {
     state.userInfo = ooo
   },
   setRouter(start, dtrouter) {
-    start.mens = [...dtrouter, ...constantRoutes]
+    start.mens = [...constantRoutes, ...dtrouter,]
   },
 
   setToken: (state, token) => {
